@@ -1,5 +1,5 @@
 workflows:
-  build-android-apk:
+  build-android:
     name: Build Android APK (Expo)
     environment:
       vars:
@@ -7,6 +7,8 @@ workflows:
     scripts:
       - npm install -g eas-cli
       - npm install
+      - echo "🔑 Usando token do Expo para login automático"
+      - eas whoami || eas login --token $EXPO_TOKEN
       - eas build -p android --profile preview --non-interactive
     artifacts:
-      - ./dist/*.apk
+      - build/**/*.apk
