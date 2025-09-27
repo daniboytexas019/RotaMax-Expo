@@ -1,17 +1,12 @@
 workflows:
-  default-workflow:
+  build-android-apk:
     name: Build Android APK (Expo)
     environment:
-      node: 18
-      npm: 9
-      groups:
-        - secure   # <- nome do grupo no Codemagic onde está o EXPO_TOKEN
+      vars:
+        EXPO_TOKEN: $EXPO_TOKEN
     scripts:
       - npm install -g eas-cli
-      - npm ci || npm install
-      - echo "🔑 Checando se o EXPO_TOKEN está disponível..."
-      - 'if [ -z "$EXPO_TOKEN" ]; then echo "❌ EXPO_TOKEN não encontrado. Configure no grupo secure"; exit 1; fi'
-      - eas whoami || echo "⚠️ Não autenticado, verifique o token"
+      - npm install
       - eas build -p android --profile preview --non-interactive
     artifacts:
-      - ./build/**/*
+      - ./dist/*.apk
