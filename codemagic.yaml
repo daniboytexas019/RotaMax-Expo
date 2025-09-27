@@ -3,7 +3,6 @@ workflows:
     name: Build Android APK (Expo)
     environment:
       node: latest
-      npm: true
       vars:
         EXPO_TOKEN: $EXPO_TOKEN
     scripts:
